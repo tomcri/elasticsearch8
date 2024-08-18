@@ -1,0 +1,7 @@
+${ELASTICSEARCH_HOST} {
+    reverse_proxy elasticsearch:9200
+}
+
+${KIBANA_HOST} {
+    reverse_proxy kibana:5601
+}

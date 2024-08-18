@@ -21,8 +21,8 @@ services:
         hard: 65536
     cap_add:
       - IPC_LOCK
-    volumes:
-      - ./elasticsearch-data:/usr/share/elasticsearch/data
+#    volumes:
+#      - ./volumes/elasticsearch-data:/usr/share/elasticsearch/data
     logging:
       driver: "json-file"
       options:
@@ -60,9 +60,28 @@ services:
       - setup-elasticsearch
     volumes:
       - ./cnf/kibana.yml:/usr/share/kibana/config/kibana.yml
-      - ./kibana-data:/usr/share/kibana/data
+      - ./volumes/kibana-data:/usr/share/kibana/data
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "5"
+
+  caddy:
+    image: caddy:2.8.4
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./cnf/Caddyfile:/etc/caddy/Caddyfile
+      - ./volumes/caddy-data:/data
+      - ./volumes/caddy-config:/config
+    environment:
+      - EMAIL=${DOMAIN_EMAIL}
+      - ACME_AGREE=true
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - KIBANA_HOST=${KIBANA_HOST}
+    depends_on:
+      - kibana
+      - elasticsearch
