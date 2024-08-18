@@ -1,0 +1,13 @@
+server.host: "0.0.0.0"
+server.shutdownTimeout: "5s"
+elasticsearch.hosts: [ "${ELASTICSEARCH_HOST}" ]
+elasticsearch.username: "${ELASTICSEARCH_USERNAME}"
+elasticsearch.password: "${ELASTICSEARCH_PASSWORD}"
+monitoring.ui.container.elasticsearch.enabled: true
+xpack.security.encryptionKey: "${XPACK_SECURITY_ENCRYPTION_KEY}"
+xpack.encryptedSavedObjects.encryptionKey: "${XPACK_SAVED_OBJECTS_ENCRYPTION_KEY}"
+xpack.reporting.encryptionKey: "${XPACK_REPORTING_ENCRYPTION_KEY}"
+server.publicBaseUrl: "${SERVER_PUBLIC_BASE_URL}"
+logging:
+  root:
+    level: "${KIBANA_LOG_LEVEL}"
